@@ -24,3 +24,9 @@ ELEMENT_DATA=$($PSQL "SELECT e.atomic_number, e.name, e.symbol, t.type, p.atomic
                       JOIN properties p USING(atomic_number) 
                       JOIN types t USING(type_id) 
                       WHERE $CONDITION")
+# Handle invalid input
+if [[ -z $ELEMENT_DATA ]]
+then
+  echo "I could not find that element in the database."
+  exit
+fi
